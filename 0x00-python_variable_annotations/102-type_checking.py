@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 '''Type Checking'''
-from typing import Tuple, Any
+from typing import Tuple, List
 
 
-def zoom_array(lst: Tuple[Any, ...], factor: int = 2) -> Tuple[Any, ...]:
-    zoomed_in: Tuple[Any, ...] = tuple(
+def zoom_array(lst: Tuple, factor: int = 2) -> Tuple:
+    '''zoom array'''
+    zoomed_in: List = [
         item for item in lst
         for i in range(factor)
-    )
-    return zoomed_in
+    ]
+    return tuple(zoomed_in)
 
 
 array = (12, 72, 91)
