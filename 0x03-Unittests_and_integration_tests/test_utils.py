@@ -39,3 +39,31 @@ class TestGetJson(unittest.TestCase):
         result = utils.get_json(test_url)
         mock_get.assert_called_once_with(test_url)
         self.assertEqual(result, test_payload)
+
+
+class TestClass:
+
+    def a_method(self):
+        return 42
+
+    @utils.memoize
+    def a_property(self):
+        return self.a_method()
+
+
+class TestMemoize(unittest.TestCase):
+    ''' Parameterize and patch '''
+
+    def test_memoize(self):
+        with patch.object(TestClass, 'a_method', return_value=42) as mocked_method:
+            test_instance = TestClass()
+
+            first_result = test_instance.a_property
+            second_result = test_instance.a_property
+
+            # Check that the correct result is returned both times
+            self.assertEqual(first_result, 42)
+            self.assertEqual(second_result, 42)
+
+            # Verify that a_method is called only once
+            mocked_method.assert_called_once()
